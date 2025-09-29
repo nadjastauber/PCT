@@ -11,12 +11,12 @@
 
         <div class="mb-3">
             <label for="dueDateInput" class="form-label">fällig am</label>
-            <input type="date" class="form-control" id="dueDate" aria-describedby="Fälligkeit"> <!-- Datepicker für Datumsauswahl-->
+            <input type="date" class="form-control" id="dueDate" aria-describedby="Fälligkeit"> <!-- Datepicker für Datumsauswahl, kein Text eingeben!-->
         </div>
 
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="submit" class="btn btn-primary">Speichern</button>
-            <button type="submit" class="btn btn-primary">Abbrechen</button>
+            <button type="submit" class="btn btn-success save" routerLink="">Speichern</button>
+            <button type="submit" class="btn btn-primary cancel" routerLink="">Abbrechen</button> <!-- routing zu Komponente in Methode hinterlegen -->
         </div>
 
     </form>
