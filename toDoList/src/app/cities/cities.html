@@ -1,0 +1,33 @@
+<p>cities works!</p>
+
+<div class="container">
+    <h1>Städte</h1>
+
+    <table class="table table-striped">
+        <caption>Ausgewählte Städte</caption>
+        <thead>
+            <tr>
+                <th scope="col">Nr</th>
+                <th scope="col">Jahr</th>
+                <th scope="col">Stadt</th>
+                <th scope="col">Bild</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (stadt of staedte; track $index; let i = $index) {
+                <tr>
+                    <td>{{ i+1 }} </td>
+                    <td>{{ stadt.jahr }}</td>
+                    <td>{{ stadt.stadt }}</td>
+                    <td>
+                        <a [href]="stadt.link">
+                            <img [src]=" stadt.bild " [alt]="stadt.stadt " />
+                        </a>
+                    </td>
+                    <td><a [routerLink]="['/cities', i+1 ]" class="btn btn-secondary btn-sm">Details</a> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
