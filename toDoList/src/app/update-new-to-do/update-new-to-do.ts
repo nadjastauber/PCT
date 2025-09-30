@@ -33,9 +33,12 @@ export class UpdateNewToDo implements OnInit {
       .getOne(this._id!)       //Tasks mit id aus Datenbank holen (nicht null)
       .then(response => {      //Daten des task in Formular hinterlegen
         this.task = response
-        this.form.patchValue({    //weist einzelnen FormControlElementen einen Wert zu
-          taskNameControl: this.task?.name,  //this.task?.name 
-          taskDateControl: this.task?.date //.split('.').reverse().join('-'),    //this.task?.date
+        this.form.patchValue({               //weist einzelnen FormControlElementen einen Wert zu
+          taskNameControl: this.task.name,  //this.task?.name 
+
+          // um den Datepicker mit altem Datum zu belegen, muss Datum aus DB ins richtige Format gebracht werden
+          // String 10.07.2025 muss zu 2025-07-10
+          taskDateControl: this.task.date.split('.').reverse().join('-'),    //this.task?.date
         });
         return this.task
       })
