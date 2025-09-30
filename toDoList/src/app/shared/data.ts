@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { City } from './city';
 
+//das ist mein Service --> stellt Daten für Komponenten bereit
+
+
 @Injectable({
   providedIn: 'root'
 })
