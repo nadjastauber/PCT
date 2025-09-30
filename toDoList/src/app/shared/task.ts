@@ -1,7 +1,7 @@
 export interface Task {
-    _id: String,                //oder number?
-    status: String,
-    name: String,
+    _id: String;                //oder number?
+    status: String;
+    name: String;
     date: String
 }
 

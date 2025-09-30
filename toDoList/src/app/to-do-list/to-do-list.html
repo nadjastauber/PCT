@@ -7,7 +7,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">Offen</th>
+                <th scope="col">Status</th>
                 <th scope="col">ToDo</th>
                 <th scope="col">Datum</th>
                 <th scope="col">Bearbeiten</th>
@@ -16,17 +16,21 @@
         </thead>
 
         <!-- Array mittel Interpolation ausgeben-->
+         
 
         <tbody>
-            @for(Task of allTasks; track $index) {
+            @for(Task of filteredTasks; track $index) {
             <tr>
-                <td><i class="bi bi-check-circle"></i></td>
+                <td><button type="button" class="btn"><i class="bi bi-check-circle"></i></button></td>
                 <td> {{Task.name }} </td>
                 <td> {{Task.date }} </td>
-                <td><i class="bi bi-pencil-square"></i></td>
-                <td><i class="bi bi-trash3"></i></td>
+                <td><button type="button" class="btn"> <i class="bi bi-pencil-square"></i></button></td>
+                <td><button type="button" class="btn"><i class="bi bi-trash3"></i></button></td>
             </tr>
             }
         </tbody>
     </table>
+
+ <button type="button" class="btn btn-light" [routerLink]="['archiv']">Archiv</button>
+
 </div>

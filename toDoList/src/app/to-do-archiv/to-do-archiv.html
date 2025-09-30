@@ -1,1 +1,32 @@
 <p>to-do-archiv works!</p>
+
+<div class="container">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Status</th>
+                <th scope="col">ToDo</th>
+                <th scope="col">Datum</th>
+                <th scope="col">Löschen</th>
+            </tr>
+        </thead>
+
+        <!-- Array mittel Interpolation ausgeben-->
+         
+
+        <tbody>
+            @for(Task of allTasks; track $index) {
+            <tr>
+                <td><button type="button" class="btn"><i class="bi bi-arrow-counterclockwise"></i></button></td>
+                <td> {{Task.name }} </td>
+                <td> {{Task.date }} </td>
+                <td><button type="button" class="btn"><i class="bi bi-trash3"></i></button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+ <button type="button" class="btn btn-light" [routerLink]="['']">Zurück</button>
+
+</div>
