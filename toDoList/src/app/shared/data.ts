@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { City } from './city';
 
-//das ist mein Service --> stellt Daten für Komponenten bereit
+//das ist mein Service --> stellt Daten aus Backend für Komponenten bereit
 
 
 @Injectable({
