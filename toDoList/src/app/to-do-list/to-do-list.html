@@ -15,17 +15,17 @@
             </tr>
         </thead>
 
-        <!-- Array mittel Interpolation ausgeben-->
-         
+        <!-- Array mittels Interpolation auslesen-->        
 
         <tbody>
-            @for(Task of filteredTasks; track $index) {
+            @for(task of filteredTasks; track $index) {
             <tr>
                 <td><button type="button" class="btn"><i class="bi bi-check-circle"></i></button></td>
-                <td> {{Task.name }} </td>
-                <td> {{Task.date }} </td>
-                <td><button type="button" class="btn"> <i class="bi bi-pencil-square"></i></button></td>
-                <td><button type="button" class="btn"><i class="bi bi-trash3"></i></button></td>
+                <td> {{task.name }} </td>
+                <td> {{task.date }} </td>
+                <td><button type="button" class="btn" [routerLink]="['/tasks', task._id ]">  <!-- task id wird geholt-->
+                    <i class="bi bi-pencil-square"></i></button></td>
+                <td><button type="button" class="btn"><i (click)="delete(task._id)" class="bi bi-trash3"></i></button></td>
             </tr>
             }
         </tbody>

@@ -16,12 +16,12 @@
          
 
         <tbody>
-            @for(Task of allTasks; track $index) {
+            @for(task of filteredTasks; track $index) {
             <tr>
                 <td><button type="button" class="btn"><i class="bi bi-arrow-counterclockwise"></i></button></td>
-                <td> {{Task.name }} </td>
-                <td> {{Task.date }} </td>
-                <td><button type="button" class="btn"><i class="bi bi-trash3"></i></button></td>
+                <td> {{task.name }} </td>
+                <td> {{task.date }} </td>
+                <td><button type="button" class="btn"><i (click)="delete(task._id)" class="bi bi-trash3"></i></button></td>
             </tr>
             }
         </tbody>

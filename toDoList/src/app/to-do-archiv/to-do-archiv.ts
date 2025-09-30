@@ -9,24 +9,31 @@ import { Task } from '../shared/task';
   templateUrl: './to-do-archiv.html',
   styleUrl: './to-do-archiv.css'
 })
-export class ToDoArchiv implements OnInit{     //OnInit --> Ausführung bei Initialisierung der Seite
+export class ToDoArchiv implements OnInit {
+     //OnInit --> Ausführung bei Initialisierung der Seite
 
-  private backendService = inject(Backend)  //backend service einbinden, damit Methoden genutzt werden können
-  allTasks : Task[] = []                    // leeres Task-Array
+  private backendService = inject(Backend) //backend service einbinden, damit Mathoden genutzt werden können
+  allTasks: Task[] = [];     // leeres Task-Array
+  filteredTasks: Task[] = [];
 
-  ngOnInit(): void {   
-   
-    this.backendService.getAll()                        //Promise Task[] wird zurückgegeben
-    .then(response => this.allTasks = response)         //Array mit allen Tasks
-    .then(allTasks => console.log('tasks in table :', allTasks))
+  async ngOnInit(): Promise<void> {
 
-    this.allTasks.filter((t) => t.status === "erledigt")   //nur erldigte Tasks anzeigen
-    .sort((a,b) => {
+    this.allTasks = await this.backendService.getAll(); //Promise Task[] wird zurückgegeben //Array mit allen Tasks     
+
+    //jetzt nach erledigten sortieren
+    this.filteredTasks = this.allTasks.filter((t) => t.status == "erledigt")   //nur erledigte Tasks anzeigen
+      .sort((a, b) => {
         let dateA = new Date(a.date.split('.').reverse().join('-'));
         let dateB = new Date(b.date.split('.').reverse().join('-'));
         return dateA.getTime() - dateB.getTime();
-      }) //sort mit KI erstellt
+      }); //sort mit KI erstellt
+
   }
+
+  delete(_id : String) : void {
+console.log(`Delete task with id=${_id}`);
+}
+
 
 
 }

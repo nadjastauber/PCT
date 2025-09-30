@@ -7,7 +7,7 @@ import { ToDoArchiv } from './to-do-archiv/to-do-archiv';
 
 export const routes: Routes = [
 { path: "create", component: CreateNewToDo },
-{ path: "tasks/:id", component: ToDoList },
+{ path: "tasks/:id", component: UpdateNewToDo },
 { path: "update", component: UpdateNewToDo },
 { path: "archiv", component: ToDoArchiv },
 { path: "cities", component: Cities },
