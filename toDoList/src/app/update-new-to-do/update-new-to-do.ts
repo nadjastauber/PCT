@@ -38,7 +38,7 @@ export class UpdateNewToDo implements OnInit {
 
           // um den Datepicker mit altem Datum zu belegen, muss Datum aus DB ins richtige Format gebracht werden
           // String 10.07.2025 muss zu 2025-07-10
-          taskDateControl: this.task.date.split('.').reverse().join('-'),    //this.task?.date
+          taskDateControl: this.task.date.split('.').reverse().join('-'),    
         });
         return this.task
       })

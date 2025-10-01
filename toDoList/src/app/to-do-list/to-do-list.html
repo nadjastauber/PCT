@@ -2,7 +2,7 @@
 
 <div class="container">
 
-    <button type="button" class="btn btn-light" [routerLink]="['create']">neues ToDo erstellen</button>
+    <button type="button" class="btn btn-light new mb-3" [routerLink]="['create']">neues ToDo erstellen</button>
 
     <table class="table table-hover">
         <thead>
@@ -31,6 +31,6 @@
         </tbody>
     </table>
 
- <button type="button" class="btn btn-light" [routerLink]="['archiv']">Archiv</button>
+ <button type="button" class="btn btn-light btn-sm done mt-1" [routerLink]="['archiv']">Erledigte</button>
 
 </div>
