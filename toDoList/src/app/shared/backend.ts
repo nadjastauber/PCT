@@ -49,9 +49,9 @@ export class Backend {
     let response = await fetch(this.apiURL + '/tasks/' + id, {
       method: "DELETE"
     });
-    let status = response.status;     //liest status der Response aus
+    let status = response.status;                           //liest status der Response aus
     console.log('status deleteOne auslesen : ', status)
-    let message = { message: status }     //variable mit eigenschaft message und wert aus status erzeugen
+    let message = { message: status }                       //variable mit eigenschaft message und wert aus status erzeugen
     return message;
   }
   

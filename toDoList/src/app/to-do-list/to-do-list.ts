@@ -14,6 +14,8 @@ export class ToDoList implements OnInit{    //OnInit --> Ausführung bei Initial
   private backendService = inject(Backend) //backend service einbinden, damit Mathoden genutzt werden können
   allTasks : Task[] = [];     // leeres Task-Array
   filteredTasks : Task[] = []; 
+  deleteStatus: boolean = false;
+  task!: Task;
 
   async ngOnInit(): Promise<void> {
     // async Methode, die Promise zurückgibt
@@ -30,9 +32,35 @@ export class ToDoList implements OnInit{    //OnInit --> Ausführung bei Initial
   
  delete(_id: string): void {    //deleteOne im backendService aufrufen (gibt message zurück)
     this.backendService.deleteOne(String(_id))
-    .then(() => { this.ngOnInit();  
+    .then(() => { this.ngOnInit();       
+      this.deleteStatus = true;
     });    
+  
+/**
+  delete(_id: string): void {    
+    this.backendService.getOne(String(_id)) //getOne im backendService aufrufen (gibt Promise Task zurück)
+    .then((response) => { 
+      this.task = response;  
+      this.deleteStatus = true;
+      console.log('delete status :' , this.deleteStatus)
+    });    
+  }  
+
+  confirm() {
+    this.backendService.deleteOne(String(this.task._id))
+    .then( () => {
+      this.backendService.getAll()
+      .then( response => {
+        this.allTasks = response 
+        this.deleteStatus=false;
+      })
+    })
   }
   
+
+  cancel(): void{
+    this.deleteStatus=false;
+  }*/
+  }
 
 }
