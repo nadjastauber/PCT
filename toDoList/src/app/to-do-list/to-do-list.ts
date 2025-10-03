@@ -16,7 +16,7 @@ export class ToDoList implements OnInit{    //OnInit --> Ausführung bei Initial
   filteredTasks : Task[] = []; 
 
   async ngOnInit(): Promise<void> {
-
+    // async Methode, die Promise zurückgibt
     this.allTasks = await this.backendService.getAll(); //Promise Task[] wird zurückgegeben //Array mit allen Tasks     
     
     //jetzt nach offenen sortieren
@@ -28,8 +28,11 @@ export class ToDoList implements OnInit{    //OnInit --> Ausführung bei Initial
       }); //sort mit KI erstellt
   }
   
-  delete(_id : String) : void {
-console.log(`Delete task with id=${_id}`);
-}
+ delete(_id: string): void {    //deleteOne im backendService aufrufen (gibt message zurück)
+    this.backendService.deleteOne(String(_id))
+    .then(() => { this.ngOnInit();  
+    });    
+  }
+  
 
 }

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Backend } from '../shared/backend';
 import { Task } from '../shared/task';
@@ -7,7 +7,7 @@ import { Task } from '../shared/task';
 
 @Component({
   selector: 'app-update-new-to-do',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './update-new-to-do.html',
   styleUrl: './update-new-to-do.css'
 })
@@ -50,7 +50,7 @@ export class UpdateNewToDo implements OnInit {
 
   // bei OnInit wird Task geholt und in this.task gespeichert, bei speichern wird für diesen Task die update Methode genutzt
   update(): void  {
-    const values = this.form.value;   //um values aus Formular zuholen    
+    const values = this.form.value;   //um values aus Formular zu holen    
 
     this.task.name = values.taskNameControl!; //name zuordnen
 

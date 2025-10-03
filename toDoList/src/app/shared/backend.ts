@@ -40,5 +40,19 @@ export class Backend {
     console.log('task in service (update) : ', task)
     return task;
   }
+
+  //delete one task
+  // delete aus backend sendet kein Task-Objekt, sondern nur Response mit Header und Status 204
+  //Rückgabewert ist Promiseobjekt mit message
+  
+   async deleteOne(id: string): Promise<{message: number}> {    
+    let response = await fetch(this.apiURL + '/tasks/' + id, {
+      method: "DELETE"
+    });
+    let status = response.status;     //liest status der Response aus
+    console.log('status deleteOne auslesen : ', status)
+    let message = { message: status }     //variable mit eigenschaft message und wert aus status erzeugen
+    return message;
+  }
   
 }
