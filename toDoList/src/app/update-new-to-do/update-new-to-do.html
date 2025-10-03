@@ -5,20 +5,24 @@
 
     <form [formGroup]="form" (ngSubmit)="update()">
         <div class="mb-3">
-            <label for="toDoInput" class="form-label">ToDo</label>
-            
+            <label for="toDoInput" class="form-label">ToDo</label>            
             <input type="text" class="form-control" id="taskName" aria-describedby="taskName" formControlName="taskNameControl">
          </div>
 
         <div class="mb-3">
-            <label for="dueDateInput" class="form-label">fällig am</label>
+            <div>
+            <label for="dueDateInput" class="form-label">fällig am</label></div>
+
+            <div>
             <input type="date" class="form-control" id="dueDate" aria-describedby="Fälligkeit" formControlName="taskDateControl"> 
-            <!-- Datepicker für Datumsauswahl, kein Text eingeben!-->
-        </div> <!-- anstatt input einfach div? -->
+            </div>           
+            <!-- Jahreszahl nach oben begrenzen?!-->
+
+        </div>
 
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="submit" class="btn btn-success save" [routerLink]="['']">Speichern</button>
-            <button type="submit" class="btn btn-primary cancel" [routerLink]="['']">Abbrechen</button> <!-- routing zu Komponente in Methode hinterlegen -->
+            <button type="submit" class="btn btn-success save">Speichern</button> 
+            <button type="button" class="btn btn-primary cancel" (click)="cancel()" >Abbrechen</button> 
         </div>
 
     </form>

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Backend } from '../shared/backend';
 import { Task } from '../shared/task';
@@ -15,6 +15,8 @@ export class UpdateNewToDo implements OnInit {
 
   private backendService = inject(Backend)
   private route = inject(ActivatedRoute)   // liefert Infos der Roue (URL)
+  private router = inject(Router)     // Service ermöglicht navigate-Funktion
+
   _id: string | null = '' //Variable kann String oder null sein, Initialisierung
   task !: Task   //garantiert, dass Variable nicht null ist
 
@@ -46,12 +48,30 @@ export class UpdateNewToDo implements OnInit {
   }
 
 
-  update() {
+  // bei OnInit wird Task geholt und in this.task gespeichert, bei speichern wird für diesen Task die update Methode genutzt
+  update(): void  {
+    const values = this.form.value;   //um values aus Formular zuholen    
 
+    this.task.name = values.taskNameControl!; //name zuordnen
+
+    //wenn Datum neu eingegeben formatieren!
+    let newDate = this.formatDateString_DDMMYYYY(values.taskDateControl!);    
+    this.task.date = newDate;  
+
+    this.backendService.update(this._id!, this.task)      // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
+    .then( () => this.router.navigate(['']))
+    console.log('geändert ausgeführt')
   }
 
-  cancel() {
+  cancel(): void {
+    this.router.navigate(['']);
+    console.log('cancel ausgeführt');
+  }
 
+  //Methode um Datums String umzusortieren   //Hilfe von Chat KI
+  formatDateString_DDMMYYYY(datum: string): string {
+    const [year, month, day] = datum.split('-');
+    return day + '.' + month + '.' + year;
   }
 
 }
