@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { Task } from '../shared/task';
 import { Backend } from '../shared/backend';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -11,42 +11,53 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
   styleUrl: './create-new-to-do.css'
 })
 export class CreateNewToDo {
-  
+
   private backendservice = inject(Backend)
   private router = inject(Router)
-  task: Task = {_id: '', status: '', name: '', date: ''}    //task Objekt erzeugen (nur task Variable geht nicht)
-  saved : boolean = false;    // noch einbauen?
-  
+  task: Task = { _id: '', status: '', name: '', date: '' }    //task Objekt erzeugen (nur task Variable geht nicht)
+  saved: boolean = false;    // noch einbauen?
 
-  form = new FormGroup({      
+
+  form = new FormGroup({
     //Formular über Steuerelemente ansprechen
-    taskNameControl : new FormControl<string>('', [Validators.required]),
+    taskNameControl: new FormControl<string>('', [Validators.required]),   //prüft, ob Feld leer ist
     taskDateControl: new FormControl<string>('', [Validators.required])
   });
 
   create(): void {
-    const values = this.form.value;     //Formularwerte ansprechen
-    //Task Eigenschaften belegen
-    this.task.status = "offen";
-    this.task.name = values.taskNameControl!;     //ich versichere über require dass Felder nicht leer sein dürfen
-    this.task.date = this.formatDateString_DDMMYYYY(values.taskDateControl!); 
-    
-    this.backendservice.create(this.task)
-      .then( () => this.saved = true )
-      console.log('Task gespeichert', this.task)
+    // nur wenn alle Input Felder valid sind task anlegen     
 
+    if (this.form.valid) {
+      const values = this.form.value;
 
-/*
-    if(this.task.name!='' && this.task.date!='') {    // wenn this name und date nicht leer sind, dann neuen task in DB speichern
+      //Formularwerte ansprechen
+      //Task Eigenschaften belegen
+      this.task.status = "offen";
+      this.task.name = values.taskNameControl!;     //ich versichere über require dass Felder nicht leer sein dürfen
+      this.task.date = this.formatDateString_DDMMYYYY(values.taskDateControl!);
+
       this.backendservice.create(this.task)
-      .then( () => this.saved = true )
-      console.log('Task gespeichert', this.task)
-    }*/
-     
+        .then(() => this.saved = true)
+      this.router.navigate(['']);
+
+    }
     
+    else { //ansonsten dafür sorge, dass invalidation gesetzt wird
+      this.form.markAllAsTouched();  // alle Felder als "berührt" markieren, um Validierung auszulösen
+    }
+
+
+    /*
+        if(this.task.name!='' && this.task.date!='') {    // wenn this name und date nicht leer sind, dann neuen task in DB speichern
+          this.backendservice.create(this.task)
+          .then( () => this.saved = true )
+          console.log('Task gespeichert', this.task)
+        }*/
+
+
   }
 
-cancel(): void {
+  cancel(): void {
     this.router.navigate(['']);
     console.log('cancel ausgeführt');
   }

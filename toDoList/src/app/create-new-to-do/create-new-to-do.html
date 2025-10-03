@@ -6,32 +6,41 @@
     <form [formGroup]="form" (ngSubmit)="create()">
         <div class="mb-3">
             <label for="toDoInput" class="form-label">ToDo</label>
-            <input type="text" class="form-control" id="taskName" aria-describedby="taskName" formControlName="taskNameControl">
+            <input type="text" class="form-control" id="taskName" aria-describedby="taskName"
+                formControlName="taskNameControl"
+                [class.is-invalid]="form.controls.taskNameControl.invalid && form.controls.taskNameControl.touched"     
+                [class.is-valid]="form.controls.taskNameControl.valid && form.controls.taskNameControl.touched"
+                required>
+                <div class="invalid-feedback">
+                    Bitte beschreibe das ToDo.
+                </div>
+
         </div>
 
         <div class="mb-3">
             <div>
-            <label for="dueDateInput" class="form-label">fällig am</label></div>
+                <label for="dueDateInput" class="form-label">fällig am</label>
+            </div>
             <div>
 
-            <input type="date" class="form-control" id="dueDate" aria-describedby="Fälligkeit" formControlName="taskDateControl"> <!-- Datepicker für Datumsauswahl, kein Text eingeben!-->
-        </div> </div>
+                <input type="date" class="form-control" id="dueDate" aria-describedby="Fälligkeit"
+                    formControlName="taskDateControl"
+                    [class.is-invalid]="form.controls.taskDateControl.invalid && form.controls.taskDateControl.touched"
+                [class.is-valid]="form.controls.taskDateControl.valid && form.controls.taskDateControl.touched"
+                required> 
+                <div class="invalid-feedback">
+                    Bitte gib ein Datum ein.
+                </div>
+            </div>
+        </div>
 
         <div class="d-grid gap-2 col-6 mx-auto">
             <button type="submit" class="btn btn-success save">Speichern</button>
-            <button type="button" class="btn btn-primary cancel" (click)="cancel()">Abbrechen</button> <!-- routing zu Komponente in Methode hinterlegen -->
+            <button type="button" class="btn btn-primary cancel" (click)="cancel()">Abbrechen</button>
+            <!-- routing zu Komponente in Methode hinterlegen -->
         </div>
 
     </form>
 
 
 </div>
-
-
-        
-     
-
-
-
-
-
