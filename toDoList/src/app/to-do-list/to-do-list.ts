@@ -2,10 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Backend } from '../shared/backend';
 import { Task } from '../shared/task';
+import { MatDialogModule } from '@angular/material/dialog';
+import { Dialog } from '@angular/cdk/dialog';
+import { ConfirmDeletion } from './confirm-deletion/confirm-deletion';
+
 
 @Component({
   selector: 'app-to-do-list',
-  imports: [RouterLink],
+  imports: [RouterLink, MatDialogModule],
   templateUrl: './to-do-list.html',
   styleUrl: './to-do-list.css'
 })
@@ -16,6 +20,13 @@ export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initia
   filteredTasks: Task[] = [];
   deleteStatus: boolean = false;
   task!: Task;
+
+  private dialog =inject(Dialog);   //Modal
+  
+  protected openModal(_id : string){
+    this.dialog.open(ConfirmDeletion, {
+      data : _id});
+  }
 
   async ngOnInit(): Promise<void> {
     // async Methode, die Promise zurückgibt
@@ -80,8 +91,7 @@ export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initia
         .then(() => {   // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
             this.ngOnInit();    //refresh der Seite
           })
-      })
-  
+      })  
   }
 
 }

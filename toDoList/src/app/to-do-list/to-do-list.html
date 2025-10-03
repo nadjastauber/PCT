@@ -1,6 +1,5 @@
 <p>to-do-list works!</p>
 
-
 <div class="container">
 <!-- 
 @if(deleteStatus) {         wenn true, dann Dialog anzeigen 
@@ -54,7 +53,7 @@
                 <td><button type="button" class="btn" [routerLink]="['/tasks', task._id ]">  <!-- task id wird geholt-->
                     <i class="bi bi-pencil-square"></i></button></td>
 
-                <td><button type="button" class="btn"><i (click)="delete(task._id)" class="bi bi-trash3"></i></button></td> <!-- (click)="delete(task._id)" -->
+                <td><button type="button" class="btn"><i (click)="openModal(task._id)" class="bi bi-trash3"></i></button></td> <!-- (click)="delete(task._id)" -->
             </tr>
             }
         </tbody>
