@@ -54,5 +54,21 @@ export class Backend {
     let message = { message: status }                       //variable mit eigenschaft message und wert aus status erzeugen
     return message;
   }
+
+  async create(newData: Task): Promise<Task> {
+    let response = await fetch(this.apiURL + '/tasks/', {    // Endpunkt mit POST Methode ansprechen, in response speichern
+      method: "POST",                                            
+      body: JSON.stringify(newData),                           //JavaScript-O. zu JSON umwandeln //Konfiguration Body des request
+      headers: {
+        "Content-Type": "application/json",                       // wenn JSON, dann content type setzten
+      },
+    });     
+    let task = await response.json();                              
+    console.log('task in service (create) : ', task)
+    return task;
+  }
+
+
+
   
 }
