@@ -47,7 +47,7 @@
         <tbody>
             @for(task of filteredTasks; track $index) {
             <tr>
-                <td><button type="button" class="btn"><i class="bi bi-check-circle"></i></button></td>
+                <td><button type="button" class="btn"><i (click)="markAsDone(task._id)" class="bi bi-check-circle"></i></button></td>
                 <td> {{task.name }} </td>
                 <td> {{task.date }} </td>
 
