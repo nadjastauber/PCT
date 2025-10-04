@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Backend } from '../shared/backend';
 import { Task } from '../shared/task';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-to-do-archiv',
-  imports: [RouterLink],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './to-do-archiv.html',
   styleUrl: './to-do-archiv.css'
 })
@@ -17,6 +18,7 @@ export class ToDoArchiv implements OnInit {
   filteredTasks: Task[] = [];
   task!: Task;
   deleteStatus: boolean = false;
+  searchInput = new FormControl(''); // Suchzeile wird über FormControl angesprochen, initial leer
 
   async ngOnInit(): Promise<void> {
 
@@ -59,6 +61,19 @@ markAsUndone(_id: string): void {
       })  
   }
 
+  search() {
+    let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
+   // this.filteredTasks = this.allTasks.filter((t) =>
+     // (t.name.toLowerCase().includes(input)));
+
+    this.filteredTasks = this.filteredTasks.filter(
+      (t) =>
+        (t.name.toLowerCase().includes(input) ||
+      (t.date.includes(input) &&
+       t.status == 'erldigt' 
+    ))
+  );
 
 
+  }
 }

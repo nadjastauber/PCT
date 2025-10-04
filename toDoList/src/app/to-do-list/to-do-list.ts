@@ -5,15 +5,17 @@ import { Task } from '../shared/task';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmDeletion } from './confirm-deletion/confirm-deletion';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-to-do-list',
-  imports: [RouterLink, MatDialogModule],
+  imports: [RouterLink, MatDialogModule, ReactiveFormsModule],
   templateUrl: './to-do-list.html',
   styleUrl: './to-do-list.css'
 })
-export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initialisierung der Seite
+export class ToDoList implements OnInit {
+  //OnInit --> Ausführung bei Initialisierung der Seite
 
   private backendService = inject(Backend) //backend service einbinden, damit Mathoden genutzt werden können
   private router = inject(Router);
@@ -21,9 +23,10 @@ export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initia
   filteredTasks: Task[] = [];
   deleteStatus: boolean = false;
   task!: Task;
+  searchInput = new FormControl(''); // Suchzeile wird über FormControl angesprochen, initial leer
 
   private dialog = inject(Dialog);   //Modal
-  
+
 
   protected openModal() {
     this.dialog.open(ConfirmDeletion);
@@ -41,10 +44,12 @@ export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initia
         let dateB = new Date(b.date.split('.').reverse().join('-'));
         return dateA.getTime() - dateB.getTime();
       }); //sort mit KI erstellt
+
+  
   }
 
-// confirm deletion
-  confirm(_id: string): void {    
+  // confirm deletion
+  confirm(_id: string): void {
     const confirmed = window.confirm('Möchtest du das ToDo wirklich löschen?');
     if (confirmed) {
       this.delete(_id);
@@ -61,7 +66,25 @@ export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initia
       });
   }
 
-  
+  search() {
+    let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
+
+    this.filteredTasks = this.allTasks.filter(
+      (t) =>
+        (t.name.toLowerCase().includes(input) ||
+      (t.date.includes(input) &&
+        t.status == 'offen' 
+    ))
+  );
+    
+  }
+
+  //Methode um Datums String umzusortieren   //Hilfe von Chat KI
+  formatDateString_DDMMYYYY(datum: string): string {
+    const [year, month, day] = datum.split('-');
+    return day + '.' + month + '.' + year;
+  }
+
 
   /**
     delete(_id: string): void {    
@@ -98,7 +121,7 @@ export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initia
       .getOne(String(_id))      //task holen
       .then((response) => {     //bekomme Promise Task zurück
         this.task = response;
-        this.task.status = "erledigt";
+        this.task.status = 'erledigt';
         return this.task;
       })
       .then(() => {

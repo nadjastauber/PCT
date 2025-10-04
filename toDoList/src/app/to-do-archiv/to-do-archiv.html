@@ -2,6 +2,8 @@
 
 <div class="container">
 
+    <input type="text" class="form-control mb-3" placeholder="suchen" aria-label="Suchleiste" aria-describedby="basic-addon1" [formControl]="searchInput" (input)="search()">
+
     <table class="table table-hover">
         <thead>
             <tr>
