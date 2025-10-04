@@ -36,14 +36,8 @@ export class ToDoList implements OnInit {
     this.allTasks = await this.backendService.getAll(); //Promise Task[] wird zurückgegeben //Array mit allen Tasks     
 
     //jetzt nach offenen sortieren
-    this.filteredTasks = this.allTasks.filter((t) => t.status == "offen")   //nur offene Tasks anzeigen
-      .sort((a, b) => {
-        let dateA = new Date(a.date.split('.').reverse().join('-'));
-        let dateB = new Date(b.date.split('.').reverse().join('-'));
-        return dateA.getTime() - dateB.getTime();
-      }); //sort mit KI erstellt
-
-
+    this.filteredTasks = this.allTasks.filter((t) => t.status == "offen");   //nur offene Tasks anzeigen
+    this.filteredTasks = this.sortTasks(this.filteredTasks);
   }
 
   // confirm deletion
@@ -63,15 +57,21 @@ export class ToDoList implements OnInit {
       });
   }
 
-  search() {    //Redundanz vermeiden!! DRY!
-    let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
-
-    this.filteredTasks = this.allTasks.filter((t) => ((t.name.toLowerCase().includes(input) || t.date.includes(input)) && t.status == 'offen'))
-      .sort((a, b) => {
+  sortTasks(taskList: Task[]): Task[] {
+    taskList
+    .sort((a, b) => {
         let dateA = new Date(a.date.split('.').reverse().join('-'));
         let dateB = new Date(b.date.split('.').reverse().join('-'));
         return dateA.getTime() - dateB.getTime();
-      }); //sort mit KI erstellt 
+      });  //sort mit KI erstellt 
+      return taskList;
+  }
+
+  search() {    //Redundanz vermeiden!! DRY!
+    let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
+
+    this.filteredTasks = this.allTasks.filter((t) => ((t.name.toLowerCase().includes(input) || t.date.includes(input)) && t.status == 'offen'));
+    this.filteredTasks = this.sortTasks(this.filteredTasks);
   }
 
   markAsDone(_id: string): void {
