@@ -70,16 +70,13 @@ markAsUndone(_id: string): void {
       })  
   }
 
-  search() {
+  search() {    //Redundanz vermeiden!! DRY
     let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
-
-    this.filteredTasks = this.allTasks.filter(
-      (t) =>
-        (t.name.toLowerCase().includes(input) ||
-      (t.date.includes(input) &&
-        t.status == 'erledigt' 
-    ))
-  );
-    
+    this.filteredTasks = this.allTasks.filter( (t) => ( (t.name.toLowerCase().includes(input) || t.date.includes(input)) && t.status == 'erledigt'))
+    .sort((a, b) => {
+        let dateA = new Date(a.date.split('.').reverse().join('-'));
+        let dateB = new Date(b.date.split('.').reverse().join('-'));
+        return dateA.getTime() - dateB.getTime();
+      }); //sort mit KI erstellt
   }
 }

@@ -43,7 +43,7 @@ export class ToDoList implements OnInit {
         return dateA.getTime() - dateB.getTime();
       }); //sort mit KI erstellt
 
-  
+
   }
 
   // confirm deletion
@@ -63,17 +63,19 @@ export class ToDoList implements OnInit {
       });
   }
 
-  search() {
+  search() {    //Redundanz vermeiden!! DRY!
     let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
 
-    this.filteredTasks = this.allTasks.filter(
-      (t) => (t.name.toLowerCase().includes(input) || (t.date.includes(input) && t.status == 'offen'))
-  );    
+    this.filteredTasks = this.allTasks.filter((t) => ((t.name.toLowerCase().includes(input) || t.date.includes(input)) && t.status == 'offen'))
+      .sort((a, b) => {
+        let dateA = new Date(a.date.split('.').reverse().join('-'));
+        let dateB = new Date(b.date.split('.').reverse().join('-'));
+        return dateA.getTime() - dateB.getTime();
+      }); //sort mit KI erstellt 
   }
 
   markAsDone(_id: string): void {
-    //Task holen
-    //mit update auf erledigt ändern
+    //Task holen und mit update auf erledigt ändern
 
     this.backendService
       .getOne(String(_id))      //task holen
