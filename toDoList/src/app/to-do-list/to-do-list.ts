@@ -18,15 +18,13 @@ export class ToDoList implements OnInit {
   //OnInit --> Ausführung bei Initialisierung der Seite
 
   private backendService = inject(Backend) //backend service einbinden, damit Mathoden genutzt werden können
-  private router = inject(Router);
   allTasks: Task[] = [];     // leeres Task-Array
   filteredTasks: Task[] = [];
-  deleteStatus: boolean = false;
+  deleteStatus: boolean = false; //?
   task!: Task;
   searchInput = new FormControl(''); // Suchzeile wird über FormControl angesprochen, initial leer
 
   private dialog = inject(Dialog);   //Modal
-
 
   protected openModal() {
     this.dialog.open(ConfirmDeletion);
@@ -53,16 +51,15 @@ export class ToDoList implements OnInit {
     const confirmed = window.confirm('Möchtest du das ToDo wirklich löschen?');
     if (confirmed) {
       this.delete(_id);
-      this.router.navigate(['']);
     }
   }
 
-  // delete
+  //delete
   delete(_id: string): void {    //deleteOne im backendService aufrufen (gibt message zurück)
     this.backendService.deleteOne(String(_id))
       .then(() => {
         this.ngOnInit();
-        this.deleteStatus = true;
+        this.deleteStatus = true; //???? Toast!
       });
   }
 
@@ -70,48 +67,9 @@ export class ToDoList implements OnInit {
     let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
 
     this.filteredTasks = this.allTasks.filter(
-      (t) =>
-        (t.name.toLowerCase().includes(input) ||
-      (t.date.includes(input) &&
-        t.status == 'offen' 
-    ))
-  );
-    
+      (t) => (t.name.toLowerCase().includes(input) || (t.date.includes(input) && t.status == 'offen'))
+  );    
   }
-
-  //Methode um Datums String umzusortieren   //Hilfe von Chat KI
-  formatDateString_DDMMYYYY(datum: string): string {
-    const [year, month, day] = datum.split('-');
-    return day + '.' + month + '.' + year;
-  }
-
-
-  /**
-    delete(_id: string): void {    
-      this.backendService.getOne(String(_id)) //getOne im backendService aufrufen (gibt Promise Task zurück)
-      .then((response) => { 
-        this.task = response;  
-        this.deleteStatus = true;
-        console.log('delete status :' , this.deleteStatus)
-      });    
-    }  
-  
-    confirm() {
-      this.backendService.deleteOne(String(this.task._id))
-      .then( () => {
-        this.backendService.getAll()
-        .then( response => {
-          this.allTasks = response 
-          this.deleteStatus=false;
-        })
-      })
-    }
-    
-  
-    cancel(): void{
-      this.deleteStatus=false;
-    }*/
-
 
   markAsDone(_id: string): void {
     //Task holen

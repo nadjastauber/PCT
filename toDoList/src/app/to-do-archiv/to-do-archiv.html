@@ -2,7 +2,7 @@
 
 <div class="container">
 
-    <input type="text" class="form-control mb-3" placeholder="suchen" aria-label="Suchleiste" aria-describedby="basic-addon1" [formControl]="searchInput" (input)="search()">
+<input type="text" class="form-control mb-3" placeholder="suchen" aria-label="Suchleiste" aria-describedby="basic-addon1" [formControl]="searchInput" (input)="search()">
 
     <table class="table table-hover">
         <thead>
@@ -23,7 +23,7 @@
                 <td><button type="button" class="btn"><i (click)="markAsUndone(task._id)"class="bi bi-arrow-counterclockwise"></i></button></td>
                 <td> {{task.name }} </td>
                 <td> {{task.date }} </td>
-                <td><button type="button" class="btn"><i (click)="delete(task._id)" class="bi bi-trash3"></i></button></td>
+                <td><button type="button" class="btn"><i (click)="confirm(task._id)" class="bi bi-trash3"></i></button></td>
             </tr>
             }
         </tbody>

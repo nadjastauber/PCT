@@ -54,9 +54,14 @@ export class UpdateNewToDo implements OnInit {
 
     this.task.name = values.taskNameControl!; //name zuordnen
 
-    //wenn Datum neu eingegeben formatieren!
+    if (values.taskDateControl){  //wenn Datum neu eingegeben, formatieren!      
     let newDate = this.formatDateString_DDMMYYYY(values.taskDateControl!);    
-    this.task.date = newDate;  
+    this.task.date = newDate;
+    }
+
+    else{
+      this.task.date = values.taskDateControl!;     //altes datum erneut nutzen;
+    }      
 
     this.backendService.update(this._id!, this.task)      // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
     .then( () => this.router.navigate(['']))

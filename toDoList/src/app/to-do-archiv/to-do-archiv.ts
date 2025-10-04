@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Backend } from '../shared/backend';
 import { Task } from '../shared/task';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -34,13 +34,22 @@ export class ToDoArchiv implements OnInit {
 
   }
 
+  // confirm deletion
+  confirm(_id: string): void {
+    const confirmed = window.confirm('Möchtest du das ToDo wirklich löschen?');
+    if (confirmed) {
+      this.delete(_id);
+    }
+  }
+
+  // delete
   delete(_id: string): void {    //deleteOne im backendService aufrufen (gibt message zurück)
     this.backendService.deleteOne(String(_id))
       .then(() => {
         this.ngOnInit();
         this.deleteStatus = true;
       });
-    }
+  }
 
 markAsUndone(_id: string): void {
     //Task holen
@@ -63,17 +72,14 @@ markAsUndone(_id: string): void {
 
   search() {
     let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
-   // this.filteredTasks = this.allTasks.filter((t) =>
-     // (t.name.toLowerCase().includes(input)));
 
-    this.filteredTasks = this.filteredTasks.filter(
+    this.filteredTasks = this.allTasks.filter(
       (t) =>
         (t.name.toLowerCase().includes(input) ||
       (t.date.includes(input) &&
-       t.status == 'erldigt' 
+        t.status == 'erledigt' 
     ))
   );
-
-
+    
   }
 }
