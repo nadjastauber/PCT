@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Backend } from '../shared/backend';
 import { Task } from '../shared/task';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -16,18 +16,20 @@ import { ConfirmDeletion } from './confirm-deletion/confirm-deletion';
 export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initialisierung der Seite
 
   private backendService = inject(Backend) //backend service einbinden, damit Mathoden genutzt werden können
+  private router = inject(Router);
   allTasks: Task[] = [];     // leeres Task-Array
   filteredTasks: Task[] = [];
   deleteStatus: boolean = false;
   task!: Task;
 
-  private dialog =inject(Dialog);   //Modal
+  private dialog = inject(Dialog);   //Modal
   
-  protected openModal(_id : string){
-    this.dialog.open(ConfirmDeletion, {
-      data : _id});
+
+  protected openModal() {
+    this.dialog.open(ConfirmDeletion);
   }
 
+  // onInit
   async ngOnInit(): Promise<void> {
     // async Methode, die Promise zurückgibt
     this.allTasks = await this.backendService.getAll(); //Promise Task[] wird zurückgegeben //Array mit allen Tasks     
@@ -41,39 +43,52 @@ export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initia
       }); //sort mit KI erstellt
   }
 
+// confirm deletion
+  confirm(_id: string): void {    
+    const confirmed = window.confirm('Möchtest du das ToDo wirklich löschen?');
+    if (confirmed) {
+      this.delete(_id);
+      this.router.navigate(['']);
+    }
+  }
+
+  // delete
   delete(_id: string): void {    //deleteOne im backendService aufrufen (gibt message zurück)
     this.backendService.deleteOne(String(_id))
       .then(() => {
         this.ngOnInit();
         this.deleteStatus = true;
       });
-
-    /**
-      delete(_id: string): void {    
-        this.backendService.getOne(String(_id)) //getOne im backendService aufrufen (gibt Promise Task zurück)
-        .then((response) => { 
-          this.task = response;  
-          this.deleteStatus = true;
-          console.log('delete status :' , this.deleteStatus)
-        });    
-      }  
-    
-      confirm() {
-        this.backendService.deleteOne(String(this.task._id))
-        .then( () => {
-          this.backendService.getAll()
-          .then( response => {
-            this.allTasks = response 
-            this.deleteStatus=false;
-          })
-        })
-      }
-      
-    
-      cancel(): void{
-        this.deleteStatus=false;
-      }*/
   }
+
+  
+
+  /**
+    delete(_id: string): void {    
+      this.backendService.getOne(String(_id)) //getOne im backendService aufrufen (gibt Promise Task zurück)
+      .then((response) => { 
+        this.task = response;  
+        this.deleteStatus = true;
+        console.log('delete status :' , this.deleteStatus)
+      });    
+    }  
+  
+    confirm() {
+      this.backendService.deleteOne(String(this.task._id))
+      .then( () => {
+        this.backendService.getAll()
+        .then( response => {
+          this.allTasks = response 
+          this.deleteStatus=false;
+        })
+      })
+    }
+    
+  
+    cancel(): void{
+      this.deleteStatus=false;
+    }*/
+
 
   markAsDone(_id: string): void {
     //Task holen
@@ -88,10 +103,10 @@ export class ToDoList implements OnInit {    //OnInit --> Ausführung bei Initia
       })
       .then(() => {
         this.backendService.update(_id, this.task)
-        .then(() => {   // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
+          .then(() => {   // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
             this.ngOnInit();    //refresh der Seite
           })
-      })  
+      })
   }
 
 }
