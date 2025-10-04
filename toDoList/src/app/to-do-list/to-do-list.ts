@@ -59,7 +59,7 @@ export class ToDoList implements OnInit {
     this.backendService.deleteOne(String(_id))
       .then(() => {
         this.ngOnInit();
-        this.deleteStatus = true; //???? Toast!
+        // this.deleteStatus = true; //???? Modal
       });
   }
 

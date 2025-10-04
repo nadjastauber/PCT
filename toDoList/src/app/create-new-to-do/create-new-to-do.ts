@@ -37,23 +37,12 @@ export class CreateNewToDo {
       this.task.date = this.formatDateString_DDMMYYYY(values.taskDateControl!);
 
       this.backendservice.create(this.task)
-        .then(() => this.saved = true)
-      this.router.navigate(['']);
-
+        .then(() => this.router.navigate(['']))
     }
     
     else { //ansonsten dafür sorge, dass invalidation gesetzt wird
       this.form.markAllAsTouched();  // alle Felder als "berührt" markieren, um Validierung auszulösen
     }
-
-
-    /*
-        if(this.task.name!='' && this.task.date!='') {    // wenn this name und date nicht leer sind, dann neuen task in DB speichern
-          this.backendservice.create(this.task)
-          .then( () => this.saved = true )
-          console.log('Task gespeichert', this.task)
-        }*/
-
 
   }
 
@@ -61,6 +50,8 @@ export class CreateNewToDo {
     this.router.navigate(['']);
     console.log('cancel ausgeführt');
   }
+
+  confirm() : void{}
 
   //Methode um Datums String umzusortieren   //Hilfe von Chat KI
   formatDateString_DDMMYYYY(datum: string): string {
