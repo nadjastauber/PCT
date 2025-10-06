@@ -15,8 +15,6 @@ export class CreateNewToDo {
   private backendservice = inject(Backend)
   private router = inject(Router)
   task: Task = { _id: '', status: '', name: '', date: '' }    //task Objekt erzeugen (nur task Variable geht nicht)
-  saved: boolean = false;    // noch einbauen?
-
 
   form = new FormGroup({
     //Formular über Steuerelemente ansprechen
@@ -32,7 +30,7 @@ export class CreateNewToDo {
 
       //Formularwerte ansprechen
       //Task Eigenschaften belegen
-      this.task.status = "offen";
+      this.task.status = 'offen';
       this.task.name = values.taskNameControl!;     //ich versichere über require dass Felder nicht leer sein dürfen
       this.task.date = this.formatDateString_DDMMYYYY(values.taskDateControl!);
 
@@ -40,18 +38,14 @@ export class CreateNewToDo {
         .then(() => this.router.navigate(['']))
     }
     
-    else { //ansonsten dafür sorge, dass invalidation gesetzt wird
-      this.form.markAllAsTouched();  // alle Felder als "berührt" markieren, um Validierung auszulösen
-    }
-
+    else { //ansonsten dafür sorgen, dass invalidation gesetzt wird
+      this.form.markAllAsTouched(); // markiert alle Felder als untouched, sodass diese invalid werden
+   }
   }
 
   cancel(): void {
     this.router.navigate(['']);
-    console.log('cancel ausgeführt');
   }
-
-  confirm() : void{}
 
   //Methode um Datums String umzusortieren   //Hilfe von Chat KI
   formatDateString_DDMMYYYY(datum: string): string {

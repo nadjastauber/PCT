@@ -40,11 +40,10 @@ export class UpdateNewToDo implements OnInit {
 
           // um den Datepicker mit altem Datum zu belegen, muss Datum aus DB ins richtige Format gebracht werden
           // String 10.07.2025 muss zu 2025-07-10
-          taskDateControl: this.task.date.split('.').reverse().join('-'),    
+          taskDateControl: this.task.date.split('.').reverse().join('-'),    //Nutzung KI
         });
         return this.task
       })
-      .then(task => console.log('task in DetailComponent : ', task))
   }
 
 
@@ -65,7 +64,6 @@ export class UpdateNewToDo implements OnInit {
 
     this.backendService.update(this._id!, this.task)      // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
     .then( () => this.router.navigate(['']))
-    console.log('geändert ausgeführt')
   }
 
   cancel(): void {

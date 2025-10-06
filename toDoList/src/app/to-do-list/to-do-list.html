@@ -1,36 +1,10 @@
-<p>to-do-list works!</p>
-
 <div class="container">
-<!-- 
-@if(deleteStatus) {         wenn true, dann Dialog anzeigen 
-        <div class="modal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Wirklich löschen?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Abbrechen" (click)="cancel()"></button>
-                </div>
 
-                <div class="modal-body">
-                    <p>Wollen Sie {{ task.name}} fällig am {{task.date }} wirklich löschen?</p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancel()">Abbrechen</button>
-                    <button type="button" class="btn btn-danger" (click)="confirm()">Löschen</button>  
-                </div>
-
-                </div>
-            </div>
-        </div> 
-        
-      } 
-      
-      @else { -->
 
     <button type="button" class="btn btn-light newTask mb-3" [routerLink]="['create']">neues ToDo erstellen</button>
-    <input type="text" class="form-control mb-3" placeholder="suchen" aria-label="Suchleiste" aria-describedby="basic-addon1" [formControl]="searchInput" (input)="search()">
-    
+    <input type="text" class="form-control mb-3" placeholder="suchen" aria-label="Suchleiste"
+        aria-describedby="basic-addon1" [formControl]="searchInput" (input)="search()">
+
 
     <table class="table table-hover">
         <thead>
@@ -43,26 +17,26 @@
             </tr>
         </thead>
 
-        <!-- Array mittels Interpolation auslesen-->        
+        <!-- Array mittels Interpolation auslesen-->
 
         <tbody>
             @for(task of filteredTasks; track $index) {
             <tr>
-                <td><button (click)="markAsDone(task._id)" type="button" class="btn"><i class="bi bi-check-circle"></i></button></td>
+                <td><button (click)="markAsDone(task._id)" type="button" class="btn"><i
+                            class="bi bi-check-circle"></i></button></td>
                 <td> {{task.name }} </td>
                 <td> {{task.date }} </td>
 
-                <td><button type="button" class="btn" [routerLink]="['/tasks', task._id ]">  <!-- task id wird geholt-->
-                    <i class="bi bi-pencil-square"></i></button></td>
+                <td><button type="button" class="btn" [routerLink]="['/tasks', task._id ]"> <!-- task id wird geholt-->
+                        <i class="bi bi-pencil-square"></i></button></td>
 
-                <td><button (click)="confirm(task._id)" type="button" class="btn"><i class="bi bi-trash3"></i></button></td> <!--  (click)="openModal()"-->
+                <td><button (click)="confirm(task._id)" type="button" class="btn"><i class="bi bi-trash3"></i></button>
+                </td> 
             </tr>
             }
         </tbody>
     </table>
 
-    
-
- <button type="button" class="btn btn-light btn-sm done mt-1" [routerLink]="['archiv']">Erledigte</button>
+    <button type="button" class="btn btn-light btn-sm done mt-1" [routerLink]="['archiv']">Erledigte</button>
 
 </div>

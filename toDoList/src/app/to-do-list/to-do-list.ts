@@ -1,10 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { Backend } from '../shared/backend';
 import { Task } from '../shared/task';
 import { MatDialogModule } from '@angular/material/dialog';
-import { Dialog } from '@angular/cdk/dialog';
-import { ConfirmDeletion } from './confirm-deletion/confirm-deletion';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -20,15 +18,9 @@ export class ToDoList implements OnInit {
   private backendService = inject(Backend) //backend service einbinden, damit Mathoden genutzt werden können
   allTasks: Task[] = [];     // leeres Task-Array
   filteredTasks: Task[] = [];
-  deleteStatus: boolean = false; //?
   task!: Task;
   searchInput = new FormControl(''); // Suchzeile wird über FormControl angesprochen, initial leer
 
-  private dialog = inject(Dialog);   //Modal
-
-  protected openModal() {
-    this.dialog.open(ConfirmDeletion);
-  }
 
   // onInit
   async ngOnInit(): Promise<void> {
@@ -36,7 +28,7 @@ export class ToDoList implements OnInit {
     this.allTasks = await this.backendService.getAll(); //Promise Task[] wird zurückgegeben //Array mit allen Tasks     
 
     //jetzt nach offenen sortieren
-    this.filteredTasks = this.allTasks.filter((t) => t.status == "offen");   //nur offene Tasks anzeigen
+    this.filteredTasks = this.allTasks.filter((t) => t.status === 'offen');   //nur offene Tasks anzeigen
     this.filteredTasks = this.sortTasks(this.filteredTasks);
   }
 
@@ -53,7 +45,6 @@ export class ToDoList implements OnInit {
     this.backendService.deleteOne(String(_id))
       .then(() => {
         this.ngOnInit();
-        // this.deleteStatus = true; //???? Modal
       });
   }
 
@@ -67,10 +58,10 @@ export class ToDoList implements OnInit {
       return taskList;
   }
 
-  search() {    //Redundanz vermeiden!! DRY!
+  search() {    
     let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
 
-    this.filteredTasks = this.allTasks.filter((t) => ((t.name.toLowerCase().includes(input) || t.date.includes(input)) && t.status == 'offen'));
+    this.filteredTasks = this.allTasks.filter((t) => ((t.name.toLowerCase().includes(input) || t.date.includes(input)) && t.status === 'offen'));
     this.filteredTasks = this.sortTasks(this.filteredTasks);
   }
 

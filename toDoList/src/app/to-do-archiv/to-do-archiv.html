@@ -1,8 +1,7 @@
-<p>to-do-archiv works!</p>
-
 <div class="container">
 
-<input type="text" class="form-control mb-3" placeholder="suchen" aria-label="Suchleiste" aria-describedby="basic-addon1" [formControl]="searchInput" (input)="search()">
+    <input type="text" class="form-control mb-3" placeholder="suchen" aria-label="Suchleiste"
+        aria-describedby="basic-addon1" [formControl]="searchInput" (input)="search()">
 
     <table class="table table-hover">
         <thead>
@@ -15,20 +14,22 @@
         </thead>
 
         <!-- Array mittel Interpolation ausgeben-->
-         
+
 
         <tbody>
             @for(task of filteredTasks; track $index) {
             <tr>
-                <td><button (click)="markAsUndone(task._id)" type="button" class="btn"><i class="bi bi-arrow-counterclockwise"></i></button></td>
+                <td><button (click)="markAsUndone(task._id)" type="button" class="btn"><i
+                            class="bi bi-arrow-counterclockwise"></i></button></td>
                 <td> {{task.name }} </td>
                 <td> {{task.date }} </td>
-                <td><button (click)="confirm(task._id)" type="button" class="btn"><i class="bi bi-trash3"></i></button></td>
+                <td><button (click)="confirm(task._id)" type="button" class="btn"><i class="bi bi-trash3"></i></button>
+                </td>
             </tr>
             }
         </tbody>
     </table>
 
- <button type="button" class="btn btn-light btn-sm undone mt-1" [routerLink]="['']">Offene</button>
+    <button type="button" class="btn btn-light btn-sm undone mt-1" [routerLink]="['']">Offene</button>
 
 </div>

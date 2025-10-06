@@ -1,33 +1,26 @@
-<p>update-new-to-do works!</p>
-
-
 <div class="container updateToDoContainer"> <!--sorgt für responsive Design mit Rahmen-->
 
     <form [formGroup]="form" (ngSubmit)="update()">
         <div class="mb-3">
-            <label for="toDoInput" class="form-label">ToDo</label>            
-            <input type="text" class="form-control" id="taskName" aria-describedby="taskName" formControlName="taskNameControl">
-         </div>
+            <label for="toDoInput" class="form-label">ToDo</label>
+            <input type="text" class="form-control" id="taskName" aria-describedby="taskName"
+                formControlName="taskNameControl">
+        </div>
 
         <div class="mb-3">
             <div>
-            <label for="dueDateInput" class="form-label">fällig am</label></div>
+                <label for="dueDateInput" class="form-label">fällig am</label>
+            </div>
 
             <div>
-            <input type="date" class="form-control" id="dueDate" aria-describedby="Fälligkeit" formControlName="taskDateControl"> 
-            </div>           
-            <!-- Jahreszahl nach oben begrenzen?!-->
-
+                <input type="date" class="form-control" id="dueDate" aria-describedby="Fälligkeit"
+                    formControlName="taskDateControl">
+            </div>
         </div>
 
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="submit" class="btn btn-success save">Speichern</button> 
-            <button type="button" class="btn btn-primary cancel" (click)="cancel()" >Abbrechen</button> 
+            <button type="submit" class="btn btn-success save">Speichern</button>
+            <button type="button" class="btn btn-primary cancel" (click)="cancel()">Abbrechen</button>
         </div>
-
     </form>
-
-
 </div>
-
-
