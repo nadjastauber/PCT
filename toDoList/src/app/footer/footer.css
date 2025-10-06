@@ -1,4 +1,5 @@
 .footerContainer {    
-    font-size: 0.8rem;
+    font-size: 0.8rem;      
     color: #cacaca; 
 }
+/** rem -> basiert auf Schriftgröße des Wurzelelements */

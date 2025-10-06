@@ -26,7 +26,7 @@ export class ToDoArchiv implements OnInit {
 
     //jetzt nach erledigten sortieren
     this.filteredTasks = this.allTasks.filter((t) => t.status === 'erledigt')   //nur erledigte Tasks anzeigen   
-    this.sortTasks(this.filteredTasks);
+    this.sortTasks(this.filteredTasks);   //Datum sortieren
   }
 
   sortTasks(taskList: Task[]): Task[] {

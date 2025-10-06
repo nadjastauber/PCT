@@ -2,13 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Backend } from '../shared/backend';
 import { Task } from '../shared/task';
-import { MatDialogModule } from '@angular/material/dialog';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-to-do-list',
-  imports: [RouterLink, MatDialogModule, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './to-do-list.html',
   styleUrl: './to-do-list.css'
 })

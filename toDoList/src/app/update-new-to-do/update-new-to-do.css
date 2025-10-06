@@ -2,16 +2,9 @@
    border: 3px solid #f1f1f1;
     border-radius: 10px;
     padding: 30px;
-
 }
 
 button.save{
-    background-color: blueviolet;
-    border-color: blueviolet;
-    color: white;
-}
-
-button.cancel{
     background-color: blueviolet;
     border-color: blueviolet;
     color: white;
