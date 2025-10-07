@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router';   //Service zur Navigation
 import { Task } from '../shared/task';
 import { Backend } from '../shared/backend';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';

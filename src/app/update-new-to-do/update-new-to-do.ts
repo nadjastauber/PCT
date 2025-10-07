@@ -14,7 +14,7 @@ import { Task } from '../shared/task';
 export class UpdateNewToDo implements OnInit {
 
   private backendService = inject(Backend)
-  private route = inject(ActivatedRoute)   // liefert Infos der Roue (URL)
+  private route = inject(ActivatedRoute)   // liefert Infos der aktuellen Route (URL)
   private router = inject(Router)     // Service ermöglicht navigate-Funktion
 
   _id: string | null = '' //Variable kann String oder null sein, Initialisierung
@@ -36,7 +36,7 @@ export class UpdateNewToDo implements OnInit {
       .then(response => {      //Daten des task in Formular hinterlegen
         this.task = response
         this.form.patchValue({               //weist einzelnen FormControlElementen einen Wert zu
-          taskNameControl: this.task.name,  //this.task?.name 
+          taskNameControl: this.task.name,
 
           // um den Datepicker mit altem Datum zu belegen, muss Datum aus DB ins richtige Format gebracht werden
           // String 10.07.2025 muss zu 2025-07-10
@@ -48,27 +48,26 @@ export class UpdateNewToDo implements OnInit {
 
 
   // bei OnInit wird Task geholt und in this.task gespeichert, bei speichern wird für diesen Task die update Methode genutzt
-  update(): void  {
+  update(): void {
     const values = this.form.value;   //um values aus Formular zu holen    
 
     this.task.name = values.taskNameControl!; //name zuordnen
 
-    if (values.taskDateControl){  //wenn Datum neu eingegeben, formatieren!      
-    let newDate = this.formatDateString_DDMMYYYY(values.taskDateControl!);    
-    this.task.date = newDate;
+    if (values.taskDateControl) {  //wenn Datum neu eingegeben, formatieren! 
+      let newDate = this.formatDateString_DDMMYYYY(values.taskDateControl!);
+      this.task.date = newDate;
     }
 
-    else{
+    else {
       this.task.date = values.taskDateControl!;     //altes datum erneut nutzen;
-    }      
+    }
 
     this.backendService.update(this._id!, this.task)      // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
-    .then( () => this.router.navigate(['']))
+      .then(() => this.router.navigate(['']))
   }
 
   cancel(): void {
     this.router.navigate(['']);
-    console.log('cancel ausgeführt');
   }
 
   //Methode um Datums String umzusortieren   //Hilfe von Chat KI

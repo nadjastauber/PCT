@@ -14,7 +14,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class ToDoList implements OnInit {
   //OnInit --> Ausführung bei Initialisierung der Seite
 
-  private backendService = inject(Backend) //backend service einbinden, damit Mathoden genutzt werden können
+  private backendService = inject(Backend) //backend service einbinden, damit Methoden genutzt werden können
   allTasks: Task[] = [];     // leeres Task-Array
   filteredTasks: Task[] = [];
   task!: Task;
@@ -26,25 +26,9 @@ export class ToDoList implements OnInit {
     // async Methode, die Promise zurückgibt
     this.allTasks = await this.backendService.getAll(); //Promise Task[] wird zurückgegeben //Array mit allen Tasks     
 
-    //jetzt nach offenen sortieren
-    this.filteredTasks = this.allTasks.filter((t) => t.status === 'offen');   //nur offene Tasks anzeigen
+    //jetzt nach offenen & Datum sortieren
+    this.filteredTasks = this.allTasks.filter((t) => t.status === 'offen');  
     this.filteredTasks = this.sortTasks(this.filteredTasks);
-  }
-
-  // confirm deletion
-  confirm(_id: string): void {
-    const confirmed = window.confirm('Möchtest du das ToDo wirklich löschen?');
-    if (confirmed) {
-      this.delete(_id);
-    }
-  }
-
-  //delete
-  delete(_id: string): void {    //deleteOne im backendService aufrufen (gibt message zurück)
-    this.backendService.deleteOne(String(_id))
-      .then(() => {
-        this.ngOnInit();
-      });
   }
 
   sortTasks(taskList: Task[]): Task[] {
@@ -56,6 +40,22 @@ export class ToDoList implements OnInit {
       });  //sort mit KI erstellt 
       return taskList;
   }
+
+  // confirm deletion
+  confirm(_id: string): void {
+    const confirmed = window.confirm('Möchtest du das ToDo wirklich löschen?');
+    if (confirmed) {
+      this.delete(_id);
+    }
+  }
+
+  //delete
+  delete(_id: string): void {    //deleteOne im backendService aufrufen
+    this.backendService.deleteOne(String(_id))
+      .then(() => {
+        this.ngOnInit();
+      });
+  }  
 
   search() {    
     let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
@@ -75,8 +75,8 @@ export class ToDoList implements OnInit {
         return this.task;
       })
       .then(() => {
-        this.backendService.update(_id, this.task)
-          .then(() => {   // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
+        this.backendService.update(_id, this.task) // updateMethode des Service aufrufen (diese spricht wiederum update im backend an)
+          .then(() => {   
             this.ngOnInit();    //refresh der Seite
           })
       })

@@ -13,7 +13,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class ToDoArchiv implements OnInit {
   //OnInit --> Ausführung bei Initialisierung der Seite
 
-  private backendService = inject(Backend) //backend service einbinden, damit Mathoden genutzt werden können
+  private backendService = inject(Backend) //backend service einbinden, damit Methoden genutzt werden können
   allTasks: Task[] = [];     // leeres Task-Array
   filteredTasks: Task[] = [];
   task!: Task;
@@ -24,9 +24,9 @@ export class ToDoArchiv implements OnInit {
 
     this.allTasks = await this.backendService.getAll(); //Promise Task[] wird zurückgegeben //Array mit allen Tasks     
 
-    //jetzt nach erledigten sortieren
-    this.filteredTasks = this.allTasks.filter((t) => t.status === 'erledigt')   //nur erledigte Tasks anzeigen   
-    this.sortTasks(this.filteredTasks);   //Datum sortieren
+    //jetzt nach erledigten & Datum sortieren
+    this.filteredTasks = this.allTasks.filter((t) => t.status === 'erledigt')   
+    this.sortTasks(this.filteredTasks);   
   }
 
   sortTasks(taskList: Task[]): Task[] {
@@ -48,7 +48,7 @@ export class ToDoArchiv implements OnInit {
   }
 
   // delete
-  delete(_id: string): void {    //deleteOne im backendService aufrufen (gibt message zurück)
+  delete(_id: string): void {    //deleteOne im backendService aufrufen 
     this.backendService.deleteOne(String(_id))
       .then(() => {
         this.ngOnInit();
@@ -74,7 +74,7 @@ export class ToDoArchiv implements OnInit {
       })
   }
 
-  search() {    //Redundanz vermeiden!! DRY
+  search() {    
     let input = this.searchInput.value?.toLocaleLowerCase() || ''; // ? prüft, ob es value gibt. wenn ja toLowerCase, wenn nein '' 
     this.filteredTasks = this.allTasks.filter((t) => ((t.name.toLowerCase().includes(input) || t.date.includes(input)) && t.status === 'erledigt'))
     this.sortTasks(this.filteredTasks);
