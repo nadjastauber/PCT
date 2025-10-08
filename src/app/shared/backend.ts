@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from './task';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,8 @@ import { Task } from './task';
 export class Backend {
 
   //apiURL = 'http://localhost:3000'
-  apiURL = 'https://pct-backend.onrender.com/'
+  apiURL = environment.apiUrl;
+
 
   constructor() { }
 
@@ -31,12 +33,12 @@ export class Backend {
   //übergebe id und neu zusammengsetzten Task
   async update(id: string, updateData: Task): Promise<Task> {
     let response = await fetch(this.apiURL + '/tasks/' + id, {    // Endpunkt mit Patch Methode ansprechen, response speichern (Body enthält Task)
-      method: "PATCH",                                            
+      method: "PATCH",
       body: JSON.stringify(updateData),                           //JavaScript-O. zu JSON umwandeln //Konfiguration Body des request
       headers: {
         "Content-Type": "application/json",                       // wenn JSON, dann content type setzten
       },
-    });     
+    });
     let task = await response.json();                              // response Body auslesen (ist der task)
     console.log('task in service (update) : ', task)
     return task;
@@ -45,26 +47,26 @@ export class Backend {
   //delete one task
   // delete aus backend sendet kein Task-Objekt, sondern nur Response mit Header und Status 204
   //Rückgabewert ist Promiseobjekt
-  
-   async deleteOne(id: string): Promise<{message: number}> {    
+
+  async deleteOne(id: string): Promise<{ message: number }> {
     let response = await fetch(this.apiURL + '/tasks/' + id, {
       method: "DELETE"
     });
     let status = response.status;                           //liest status der Response aus
     console.log('status deleteOne auslesen : ', status)
     let message = { message: status }                       //variable mit eigenschaft message und wert aus status erzeugen (Objekt)
-    return message;                                          
-    
+    return message;
+
   }
 
   async create(newData: Task): Promise<Task> {
     let response = await fetch(this.apiURL + '/tasks/', {    // Endpunkt mit POST Methode ansprechen, in response speichern
-      method: "POST",                                            
+      method: "POST",
       body: JSON.stringify(newData),                           //JavaScript-O. zu JSON umwandeln //Konfiguration Body des request
       headers: {
         "Content-Type": "application/json",                       // wenn JSON, dann content type setzten
       },
-    });     
+    });
     let task = await response.json();                              // task aus Body auslesen
     console.log('task in service (create) : ', task)
     return task;
@@ -72,5 +74,5 @@ export class Backend {
 
 
 
-  
+
 }
