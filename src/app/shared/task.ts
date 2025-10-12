@@ -5,4 +5,5 @@ export interface Task {
     date: string
 }
 
-// hier gebe ich an wie ich Eigenschafte eines Task aus Datenbank lesen kann
+// hier gebe ich an wie ich Eigenschafte eines Task aus Datenbank lesen kann 
+// Typsicherheit
